@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Buyers Home</title>
+
+    <!-- Bootstrap Style Sheet -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+     <!-- header -->
+    <div class="container-sm">
+        <div class="card-body" align="center">
+            <div>
+                <h1>WELCOME TO NITTANY MARKET</h1>
+                <h2>Seller Home</h2>
+            </div>
+
+            <!-- Product Search-->
+            <div>
+            <form id="search select" action="seller/product_search" method="Post">
+                <button type="submit" name = "submit" value="search" class="btn btn-primary">Search Products</button>
+            </form>
+
+            </div>
+            <!-- Info Access -->
+            <div class ="edit">
+                <form id="info_button" action="/seller/info" method="Get">
+                   <button type="submit" class="btn btn-primary">Edit Info</button>
+                </form>
+            </div>
+
+
+            <!-- Publish Listing-->
+            <div class ="edit">
+                <form id="info_button" action="/seller/listing" method="Get">
+                   <button type="submit" class="btn btn-primary">Post Listing</button>
+                </form>
+            </div>
+
+            <!-- navigate to other -->
+            {% if buyer =="true" %}
+                <div class ="edit">
+                <form id="tobuyer" action="/buyer" method="Get">
+                   <button type="submit" class="btn btn-primary">Go to Buyers Page</button>
+                </form>
+                </div>
+            {% endif %}
+
+            <!-- Logout -->
+            <div class ="edit">
+                <form id="log_out" action="/" method="Get">
+                   <button type="submit" class="btn btn-primary">Logout</button>
+                </form>
+            </div>
+
+        <style>
+            .edit {
+                padding-top: 50px;
+            }
+        </style>
+
+
+        </div>
+    </div>
+</body>
+</html>
+</body>
+</html>

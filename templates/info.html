@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Buyer Info</title>
+
+    <!-- Bootstrap Style Sheet -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+     <!-- header -->
+    <div class="container-sm">
+        <div class="card-body" align="center">
+            <div>
+                <h1>Edit Personal Info</h1>
+            </div>
+        {% if user == "buyer" %}
+            {#          Info  table         #}
+            <table class="table table-dark" id ="prod_table">
+                    <tr>
+                        <th scope="col">email</th>
+                        <th scope="col"> first name</th>
+                        <th scope="col"> last name</th>
+                        <th scope="col"> gender</th>
+                        <th scope="col"> age </th>
+                        <th scope="col">main credit card</th>
+                    </tr>
+                    <tbody>
+
+                    {% for email, first_name, last_name, gender, age, home_address_id, billing_address_id in info %}
+                        <tr>
+                            <td>{{ email }}</td>
+                            <td>{{first_name}}</td>
+                            <td> {{ last_name }} </td>
+                            <td> {{ gender }} </td>
+                            <td> {{ age }} </td>
+                            <td> {{ cc_l4 }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+            </table>
+
+        {#          Address  table         #}
+            <table class="table table-dark" id ="prod_table">
+                    <tr>
+                        <th scope="col">Address Type</th>
+                        <th scope="col"> address_Id</th>
+                        <th scope="col"> Zipcode</th>
+                        <th scope="col"> street number</th>
+                        <th scope="col"> steet name </th>
+                        <th scope="col">city</th>
+                        <th scope="col">state</th>
+                    </tr>
+                    <tbody>
+                    {#         home address           #}
+                    {% for address_ID, zipcode, street_num, street_name in h_a %}
+                        <tr>
+                            <td>Home Address</td>
+                            <td>{{ address_ID }}</td>
+                            <td>{{zipcode}}</td>
+                            <td> {{ street_num }} </td>
+                            <td> {{ street_name }} </td>
+                    {% endfor %}
+                    {% for city, state in h_a_zipinfo %}
+                            <td> {{ city }} </td>
+                            <td> {{ state }} </td>
+                        </tr>
+                    {% endfor %}
+                    {#         billing address           #}
+                    {% for address_ID, zipcode, street_num, street_name in b_a %}
+                        <tr>
+                            <td>Billing Address</td>
+                            <td>{{ address_ID }}</td>
+                            <td>{{zipcode}}</td>
+                            <td> {{ street_num }} </td>
+                            <td> {{ street_name }} </td>
+                    {% endfor %}
+                    {% for city, state in b_a_zipinfo %}
+                            <td> {{ city }} </td>
+                            <td> {{ state }} </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+            </table>
+
+            {#       remove credit cards      #}
+            <div>
+                <label for =rem_cc>Remove Credit Cards</label>
+                <form id ="rem_cc">
+                    <select name="cc_sel" id="cc_sel">
+                    <option value ="Any">Any</option>
+                    {% for option in cc_nums %}
+                        <option value = "{{ option[0] }}">{{ option[0] }}</option>
+                    {% endfor %}
+                    </select>
+                    <input type="submit" >
+                </form>
+            </div>
+            {#       add credit cards        #}
+            <div>
+                <label for ="new_cc">Add credit card </label>
+                <form id ="new_cc">
+                    <label for ="cc_num">New Credit Card Number</label>
+                   <input id = "cc_num" type="text" width="50">
+                    <label for ="cc_code">Code</label>
+                   <input id = "cc_code" type="text" width="3">
+                 </br>
+                    <label for ="cc_date_m">Expiration Date: Month</label>
+                   <input id = "cc_date_m" type="text" maxlength="2">
+                    <input id ="cc_date_y" type="text" maxlength="2">
+                    <input type="submit" >
+                </form>
+            </div>
+            {#            set new password          #}
+            <div>
+                <label for ="new_ps">Reset Password</label>
+                <form id ="new_ps" action="/buyer/info" method = "Post">
+                    <label for ="ps">New Password:</label>
+                   <input id = "ps" name ="ps" type="text" width="50">
+                    <button type="submit" name="submit" value="password" >Submit</button>
+                </form>
+                {{ ps_mes }}
+            </div>
+            <div>
+                <form id="info_button" action="/buyer" method="get">
+                   <button type="submit" class="btn btn-primary">Home</button>
+                </form>
+            </div>
+        {% endif %}
+        {% if user == "seller" %}
+            <div>
+                <label for ="new_ps">Reset Password</label>
+                <form id ="new_ps" action="/seller/info" method = "Post">
+                    <label for ="ps">New Password:</label>
+                   <input id = "ps" name ="ps" type="text" width="50">
+                    <button type="submit" name="submit" value="password" >Submit</button>
+                </form>
+                {{ ps_mes }}
+            </div>
+            <div>
+                <form id="info_button" action="/seller" method="get">
+                   <button type="submit" class="btn btn-primary">Home</button>
+                </form>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+</body>
+</html>

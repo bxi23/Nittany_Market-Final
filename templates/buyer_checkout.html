@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Checkout</title>
+
+    <!-- Bootstrap Style Sheet -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+<!-- header -->
+    <div class="container-sm">
+        <div class="card-body" align="center">
+            <div>
+                <h1>Checkout</h1>
+            </div>
+            <div>
+                <h2> Product: {{ product[1] }} , {{ product[3]}} , {{  product[5]  }}</h2>
+                <p> Description: {{ product[5] }}  | Price: {{ product[6] }} | Inventory: {{ product[7] }} </p>
+            </div>
+
+            <div>
+                <form action="/buyer/checkout" method="POST">
+                        <label for ="cc_sel">Credit Card:</label>
+                        <select name="cc_sel" id="cc_sel">
+                            {% for option in cc_nums %}
+                                <option value = "{{ option[0] }}">{{ option[0] }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for ="Quantity" >Listing_ID:</label>
+                        <input id = "Quantity" name="Quantity" type="text" value="{{ quantity }}">
+                         <button type="submit" name="submit" value="confirm">confirm</button>
+                    </form>
+            {{ mes }}
+            </div>
+            <div id="cats_form">
+                <form action= "/buyer" method="Get"><button type="submit">Home</button> </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

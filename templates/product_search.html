@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Buyers Home</title>
+
+    <!-- Bootstrap Style Sheet -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+     <!-- header -->
+    <div class="container-sm">
+        <div class="card-body" align="center">
+            <div>
+                <h1>Place Order:</h1>
+            </div>
+            {% if user =="buyer" %}
+            <div id="cats_form">
+                <form action= "/buyer" method="Get"><button type="submit">Home</button> </form>
+            </div>
+            {% endif %}
+
+            {% if user =="seller" %}
+            <div id="cats_form">
+                <form action= "/seller" method="Get"><button type="submit">Home</button> </form>
+            </div>
+            {% endif %}
+            <style>
+                #cats_form {
+                    padding-bottom: 50px;
+                }
+            </style>
+            <div>
+                {%  if user == "buyer" %}
+                    <form action="/buyer/checkout" method="POST">
+                        <label for ="seller_email">Seller Email:</label>
+                        <input id = "seller_email" name ="seller_email" type="text">
+                        <label for ="listing_ID" >Listing_ID:</label>
+                        <input id = "listing_ID" name="listing_ID" type="text">
+                        <label for ="quantity">Quantity:</label>
+                        <input id = "quantity" name="quantity" type="text" size ="5">
+                        <button type="submit" name="submit" value="move">Place Order</button>
+                    </form>
+                {% endif %}
+                <h1>{{ cat }}</h1>
+                <h2 class="card-title">Product Listings</h2>
+                <table class="table table-dark" id ="prod_table">
+                    <tr>
+                        <th scope="col"> Listing_ID</th>
+                        <th scope="col"> Title</th>
+                        <th scope="col"> Price</th>
+                        <th scope="col"> Seller Email</th>
+                        <th scope="col"> Listing Id</th>
+                        <th scope="col"> Product Name</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col"> Product Description</th>
+                    </tr>
+                    <tbody>
+
+                    <p>{{ listings|length }} Results</p>
+                    {% for Listing_ID, Title, Price, Seller_Email, Listing_ID, Product_Name, Quantity, Product_Description in listings %}
+                        <tr>
+                            <td>{{ Listing_ID }}</td>
+                            <td>{{Title}}</td>
+                            <td> {{ Price }} </td>
+                            <td> {{ Seller_Email }} </td>
+                            <td> {{ Listing_ID}} </td>
+                            <td>{{ Product_Name }}</td>
+                            <td>{{Quantity}}</td>
+                            <td>{{Product_Description}}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <script>
+                window.onload = cat_buttons();
+                function cat_buttons(){
+                    cats = JSON.parse({{ cats|tojson }});
+                    var pc = '{{cat|safe}}';
+                    console.log(pc);
+                    var y = document.createElement("form");
+                    y.method = "Post"
+                    for (var i= 0; i<cats.length;i++ ){
+                        console.log(cats[i][0], pc);
+                        if (cats[i][0] == pc){
+                            let button = document.createElement("button");
+                            button.innerHTML = cats[i][1];
+                            button.type = "submit";
+                            button.name = 'submit';
+                            button.value = cats[i][1];
+                            button.text = cats[i][1];
+                            y.appendChild(button);
+                        }
+                    }
+                    //document.getElementById("cats_form").insertAdjacentHTML("beforebegin", y);
+                    document.getElementById("cats_form").appendChild(y);
+                }
+            </script>
+
+</body>
+</html>
